@@ -26,7 +26,33 @@ jobs:
         run: |
           pytest
 
-      - name: Install Trivy
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run AI Log Prediction
+        run: |
+          python3 -m app.main
+          # Fail build if risky log detected
+          python3 -c "
+import pandas as pd
+from app.model import train_model, predict_log
+
+model, vectorizer = train_model()
+
+# Read the latest log file
+with open('logs/sample.log') as f:
+    lines = f.readlines()
+
+# Predict each line
+for line in lines:
+    pred, prob = predict_log(line.strip(), model, vectorizer)
+    if pred == 1:
+        print(f'RISKY LOG DETECTED: {line.strip()}')
+        exit(1)  # Fail the pipeline immediately
+"
+
+      - name: Install Python      - name: Install Trivy
         run: |
           sudo apt-get install -y wget apt-transport-https gnupg lsb-release
           wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -

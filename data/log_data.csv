@@ -1,0 +1,8 @@
+log_text,label
+"INFO: Application started",0
+"INFO: User logged in",0
+"WARNING: Disk space low",0
+"ERROR: Failed to connect to database",1
+"ERROR: Timeout occurred",1
+"WARNING: CPU usage high",0
+"ERROR: Null pointer exception",1
