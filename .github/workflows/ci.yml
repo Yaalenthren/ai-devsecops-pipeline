@@ -35,26 +35,26 @@ jobs:
         run: |
           python3 -m app.main
           python3 << EOF
-import pandas as pd
-from app.model import train_model, predict_log
+      import pandas as pd
+      from app.model import train_model, predict_log
 
-model, vectorizer = train_model()
+      model, vectorizer = train_model()
 
-with open('logs/sample.log') as f:
-    lines = f.readlines()
+      with open('logs/sample.log') as f:
+          lines = f.readlines()
 
-risky_found = False
-for line in lines:
-    pred, prob = predict_log(line.strip(), model, vectorizer)
-    if pred == 1:
-        risky_found = True
-        print(f'WARNING: Risky log detected: {line.strip()} (Confidence: {prob:.2f})')
+      risky_found = False
+      for line in lines:
+          pred, prob = predict_log(line.strip(), model, vectorizer)
+          if pred == 1:
+              risky_found = True
+              print(f'WARNING: Risky log detected: {line.strip()} (Confidence: {prob:.2f})')
 
-if not risky_found:
-    print('No risky logs detected.')
-EOF
+      if not risky_found:
+          print('No risky logs detected.')
+      EOF
 
-      # 6️⃣ Install Trivy for security scanning
+      # 6️.Install Trivy for security scanning
       - name: Install Trivy
         run: |
           sudo apt-get install -y wget apt-transport-https gnupg lsb-release
@@ -63,7 +63,7 @@ EOF
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # 7️⃣ Run Trivy Scan (Filesystem)
+      # 7️.Run Trivy Scan (Filesystem)
       - name: Run Trivy Scan (Filesystem)
         run: |
           trivy fs --exit-code 1 --severity HIGH,CRITICAL .
