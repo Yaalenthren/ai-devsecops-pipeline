@@ -34,7 +34,7 @@ jobs:
       - name: Run AI Log Prediction
         run: |
           python3 -m app.main
-          python3 scripts/ai_check.py
+          PYTHONPATH=. python3 scripts/ai_check.py
       # 6️.Install Trivy for security scanning
       - name: Install Trivy
         run: |
