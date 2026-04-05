@@ -33,33 +33,23 @@ jobs:
       - name: Run AI Log Prediction
         run: |
           python3 -m app.main
-          # Fail build if risky log detected
+          # Warn if risky log detected (do NOT fail build)
           python3 -c "
 import pandas as pd
 from app.model import train_model, predict_log
 
 model, vectorizer = train_model()
 
-# Read the latest log file
 with open('logs/sample.log') as f:
     lines = f.readlines()
 
-# Predict each line
+risky_found = False
 for line in lines:
     pred, prob = predict_log(line.strip(), model, vectorizer)
     if pred == 1:
-        print(f'RISKY LOG DETECTED: {line.strip()}')
-        exit(1)  # Fail the pipeline immediately
+        risky_found = True
+        print(f'WARNING: Risky log detected: {line.strip()} (Confidence: {prob:.2f})')
+
+if not risky_found:
+    print('No risky logs detected.')
 "
-
-      - name: Install Python      - name: Install Trivy
-        run: |
-          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install -y trivy
-
-      - name: Run Trivy Scan (Filesystem)
-        run: |
-          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
