@@ -15,6 +15,7 @@ This project goes beyond traditional CI/CD by integrating AI-powered predictive 
 - **GitHub Actions Integration**: Fully automated pipeline triggered on every push
 
 ## 🏗️ Architecture
+```
 Code Push → GitHub Actions → Environment Setup → Tests
 ↓
 AI Log Analysis
@@ -28,6 +29,7 @@ Security Scan (Trivy)
 ↓
 Vulnerabilities found? → ❌ Fail
 No issues? → ✅ Pass
+```
 
 ## 🤖 How the AI Works
 
@@ -66,7 +68,7 @@ Without thresholds, the model warns on every log with >50% failure probability, 
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/ai-cicd-pipeline.git
+git clone https://github.com/Yaalenthren/ai-devsecops-pipeline.git
 cd ai-cicd-pipeline
 ```
 
@@ -209,10 +211,6 @@ Contributions are welcome! Please follow these steps:
 - scikit-learn for ML capabilities
 - Trivy for security scanning
 - GitHub Actions for CI/CD automation
-
-## 📧 Contact
-
-Have questions or suggestions? Feel free to open an issue or reach out!
 
 ---
 
