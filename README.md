@@ -47,7 +47,8 @@ No issues? → ✅ Pass
 5. Displays confidence score with each prediction
 
 ### Why Confidence Thresholds Matter
-Without thresholds, the model warns on every log with >50% failure probability, leading to alert fatigue. By setting a 70% threshold, we ensure only high-confidence predictions trigger warnings, making alerts actionable and trustworthy.
+Without thresholds, the model warns on every log with >50% failure probability, leading to alert fatigue. 
+By setting a 70% threshold, we ensure only high-confidence predictions trigger warnings, making alerts actionable and trustworthy.
 
 ## 🛠️ Tech Stack
 
